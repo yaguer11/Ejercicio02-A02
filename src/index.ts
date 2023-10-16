@@ -22,11 +22,11 @@ let taskList: Task | null = null;
 
 // Función para limpiar la pantalla
 function clearScreen(): void {
-  console.clear(); // Intenta limpiar la pantalla en la mayoría de los terminales
+  console.clear();
 }
 
 function showMenu(): void {
-  clearScreen(); // Limpia la pantalla antes de mostrar el menú
+  clearScreen();
   console.log("Menú:");
   console.log("(1) Ver mis tareas");
   console.log("(2) Buscar tarea");
@@ -37,7 +37,7 @@ function showMenu(): void {
 }
 
 function handleMenuChoice(choice: string): void {
-  const choiceLower = choice.toLowerCase(); // Convertir a minúsculas
+  const choiceLower = choice.toLowerCase();
   switch (choiceLower) {
     case '1':
       showTasks();
@@ -67,6 +67,7 @@ function handleMenuChoice(choice: string): void {
 }
 
 function showTasks(): void {
+  clearScreen();
   if (!taskList) {
     console.log("No hay tareas para mostrar.");
   } else {
@@ -83,6 +84,7 @@ function showTasks(): void {
 }
 
 function searchTask(): void {
+  clearScreen();
   rl.question("Introduzca el título de la tarea a buscar: ", (title) => {
     let currentTask: Task | null = taskList;
     while (currentTask) {
@@ -107,15 +109,16 @@ function searchTask(): void {
 }
 
 function addTask(): void {
+  clearScreen();
   rl.question("Introduzca el título de la tarea: ", (title) => {
     rl.question("Introduzca la descripción de la tarea: ", (description) => {
       rl.question("Introduzca el estado de la tarea (Pendiente/En curso/Terminada/Cancelada): ", (status) => {
-        status = normalizeOption(status); // Convertir a minúsculas
+        status = normalizeOption(status);
         if (isValidStatus(status)) {
           rl.question("Introduzca la fecha de vencimiento (AAAA-MM-DD): ", (dueDate) => {
             if (isValidDate(dueDate)) {
               rl.question("Introduzca la dificultad de la tarea (Facil/Medio/Dificil): ", (difficulty) => {
-                difficulty = normalizeOption(difficulty); // Convertir a minúsculas
+                difficulty = normalizeOption(difficulty);
                 if (isValidDifficulty(difficulty)) {
                   const currentDate = new Date().toLocaleDateString();
                   const task: Task = {
@@ -150,36 +153,36 @@ function addTask(): void {
 }
 
 function editTask(): void {
-    rl.question("Introduzca el título de la tarea a editar: ", (title) => {
-      let currentTask: Task | null = taskList;
-      let found = false; // Variable para rastrear si se encontró la tarea
-      while (currentTask) {
-        if (normalizeOption(currentTask.title) === normalizeOption(title)) {
-          rl.question("Introduzca el nuevo estado de la tarea (Pendiente/En curso/Terminada/Cancelada): ", (status) => {
-            status = normalizeOption(status); // Convertir a minúsculas y quitar acentos
-            if (isValidStatus(status)) {
-              if (currentTask) {
-                currentTask.status = status;
-                currentTask.lastEditDate = new Date().toLocaleDateString();
-                console.log("\nTarea editada correctamente.");
-              }
-            } else {
-              console.log("Estado no válido. Debe ser 'Pendiente', 'En curso', 'Terminada' o 'Cancelada'.");
+  clearScreen();
+  rl.question("Introduzca el título de la tarea a editar: ", (title) => {
+    let currentTask: Task | null = taskList;
+    let found = false;
+    while (currentTask) {
+      if (normalizeOption(currentTask.title) === normalizeOption(title)) {
+        rl.question("Introduzca el nuevo estado de la tarea (Pendiente/En curso/Terminada/Cancelada): ", (status) => {
+          status = normalizeOption(status);
+          if (isValidStatus(status)) {
+            if (currentTask) {
+              currentTask.status = status;
+              currentTask.lastEditDate = new Date().toLocaleDateString();
+              console.log("\nTarea editada correctamente.");
             }
-            askToReturnToMenu();
-          });
-          found = true; // Marcar que se encontró la tarea
-          break; // Salir del bucle una vez que se encontró la tarea
-        }
-        currentTask = currentTask.next;
+          } else {
+            console.log("Estado no válido. Debe ser 'Pendiente', 'En curso', 'Terminada' o 'Cancelada'.");
+          }
+          askToReturnToMenu();
+        });
+        found = true;
+        break;
       }
-      if (!found) {
-        console.log("Tarea no encontrada.");
-        askToReturnToMenu();
-      }
-    });
-  }
-  
+      currentTask = currentTask.next;
+    }
+    if (!found) {
+      console.log("Tarea no encontrada.");
+      askToReturnToMenu();
+    }
+  });
+}
 
 function askToReturnToMenu(): void {
   rl.question("\n¿Desea volver al menú principal? (S/N): ", (answer) => {
@@ -192,6 +195,7 @@ function askToReturnToMenu(): void {
 }
 
 // Funciones de validación
+
 function isValidStatus(status: string): boolean {
   return ['pendiente', 'en curso', 'terminada', 'cancelada'].includes(status);
 }
@@ -205,7 +209,6 @@ function isValidDifficulty(difficulty: string): boolean {
   return ['facil', 'medio', 'dificil'].includes(difficulty);
 }
 
-// Función para convertir a minúsculas y quitar acentos
 function normalizeOption(option: string): string {
   return option.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
