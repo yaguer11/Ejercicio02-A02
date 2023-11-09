@@ -1,7 +1,7 @@
 # Ejercicio02-A02
 Aplicando lo aprendido 2 - Ejercicio 02
 
-[UNIVERSIDAD NACIONAL DE VILLA MERCEDES
+UNIVERSIDAD NACIONAL DE VILLA MERCEDES
 
 Carrera: Ingeniería en Sistemas de Información. 
 
