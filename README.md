@@ -12,4 +12,3 @@ Profesor/res: Walter Molina, Diego Puertas.
 Alumno: Germán Adrián Muñoz.
 
 LINK Replit: https://replit.com/@yaguer11/Ejercicio02-A02
-](https://replit.com/@yaguer11/Ejercicio02-A02)https://replit.com/@yaguer11/Ejercicio02-A02
